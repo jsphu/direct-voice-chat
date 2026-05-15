@@ -8,7 +8,7 @@ where python >nul 2>nul
 if %ERRORLEVEL% neq 0 (
     echo Python not found. Attempting to install via winget...
     where winget >nul 2>nul
-    if %ERRORLEVEL% eq 0 (
+    if %ERRORLEVEL% EQU 0 (
         echo Installing Python 3...
         winget install --id Python.Python.3 --source winget --silent --accept-package-agreements --accept-source-agreements
         echo.
