@@ -5,10 +5,16 @@ set -e
 
 echo "--- P2P Voice Chat: Linux Setup & Run ---"
 
-# 1. Check for Python
+# 1. Check for Python & Pip
 if ! command -v python3 &> /dev/null; then
-    echo "Error: Python3 is not installed."
-    exit 1
+    echo "Python3 not found. Attempting to install..."
+    if command -v apt-get &> /dev/null; then
+        sudo apt-get update && sudo apt-get install -y python3 python3-pip python3-venv
+    else
+        echo "Error: Python3 is not installed and I don't know how to install it on this distro."
+        echo "Please install python3, pip, and venv manually."
+        exit 1
+    fi
 fi
 
 # 2. Install System Dependencies (PortAudio)
