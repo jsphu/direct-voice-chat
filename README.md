@@ -1,52 +1,41 @@
-# P2P Terminal Voice Chat
+# P2P Terminal Voice Chat (Rust Version)
 
-A cross-platform (Windows & Linux), low-latency peer-to-peer voice chat application built with Python.
+A cross-platform, low-latency peer-to-peer voice chat application built with Rust. This version compiles to a standalone binary, making it much easier to run on machines without Python.
 
 ## Features
-- **P2P Architecture:** Connects directly between two peers.
-- **Low Latency:** Uses UDP for real-time audio transmission.
-- **Clean CLI:** Modern terminal interface using the `rich` library.
-- **Fast Join:** Automatically detects local IPs to simplify connections.
-
-## Prerequisites
-
-### Linux (Ubuntu/Debian)
-You need to install the PortAudio development headers before installing the Python packages:
-```bash
-sudo apt-get update
-sudo apt-get install portaudio19-dev python3-pyaudio
-```
-
-### Windows
-PyAudio usually installs directly via pip, but ensure you have a working Python environment.
+- **Zero Runtime Dependencies**: Once compiled, it's a single file.
+- **Low Latency**: Uses UDP and `cpal` for high-performance audio.
+- **Cross-Platform**: Works on Windows (WASAPI) and Linux (ALSA).
 
 ## Installation
 
-1. Clone the repository (if you haven't already).
-2. Install the Python dependencies:
+You will need the Rust toolchain installed. If you don't have it, get it at [rustup.rs](https://rustup.rs/).
+
+### Linux Dependencies
+You may need the ALSA development headers:
 ```bash
-pip install -r requirements.txt
+sudo apt-get update
+sudo apt-get install libasound2-dev
 ```
+
+### Build
+```bash
+cargo build --release
+```
+The binary will be located at `target/release/direct-voice-chat`.
 
 ## Usage
 
 ### 1. Start the Host
-On one machine, run:
 ```bash
-python main.py --mode host
+./target/release/direct-voice-chat --mode host
 ```
-The app will display the local IP address (e.g., `192.168.1.50`).
+Note the **Local IP** displayed.
 
 ### 2. Join the Session
-On the second machine (on the same local network), run:
 ```bash
-python main.py --mode join --ip 192.168.1.50
+./target/release/direct-voice-chat --mode join --ip <HOST_IP>
 ```
-*(Replace `192.168.1.50` with the IP displayed on the host machine).*
 
 ## Controls
-- **Ctrl+C**: Gracefully stop the chat and exit.
-
-## Troubleshooting
-- **Firewall:** Ensure that the port (default `50005`) is allowed through your system firewall for UDP traffic.
-- **Microphone Permissions:** Ensure your terminal or Python executable has permission to access the microphone.
+- **Ctrl+C**: Gracefully stop the chat.
